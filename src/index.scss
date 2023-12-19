@@ -1,30 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
 body, html {
+	background-color: #F5F5F5;
 	padding: 0;
 	margin: 0;
+
+	p, h1, h2, li, label {
+		font-family: 'Roboto Condensed', sans-serif;
+	}
 }
 
 .Nav {
-	background-color: #12161D;
+	position: fixed;
 	width: 100%;
-	height: 120px;
+	z-index: 2;
 
-	p {
-		color: #A38A61;
+	.searchForm {
+		width: 100%;
+		background-color: blue;
+		position: relative;
+		padding: 10px;
+		display: grid;
+		place-items: center;
+
+		input {
+			width: 50%;
+			outline: 0;
+			border: 2px solid black;
+			padding: 10px;
+			background: transparent;
+			font-size: 22px;
+			color: white;
+			border-radius: 5px;
+			box-sizing:border-box;
+
+			&:hover {
+				outline: 0;
+				border: 2px solid white;
+				border-radius: 5px;
+			}
+
+			&:focus {
+				outline: 0;
+				border: 2px solid white;
+				border-radius: 5px;
+			}
+		}
+
+		ul {
+			position: absolute;
+			width: 49vw;
+			background-color: white;
+			top: 45px;
+			box-sizing: border-box;
+			z-index: 100;
+			max-height: 50vh;
+			overflow-y: auto;
+			list-style: none;
+			text-align: center;
+		}
+
+		li {
+			cursor: pointer;
+
+			&:hover {
+				background-color: gray;
+			}
+		}
+
+		.searchLabel {
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 27%;
+			padding: 3px;
+			background: blue;
+			font-size: 1em;
+			color: white;
+			text-transform: uppercase;
+		}
+
+		.profileIcon {
+			justify-self: flex-end;
+			position: absolute;
+			padding-right: 10%;
+			font-size: 50px;
+			top: 10px;
+			text-decoration: none;
+
+			svg {
+				color: black;
+			}
+
+			&:hover {
+				padding-right: calc(10% - 2px);
+				top: 8px;
+				font-size: 54px;
+				transition: 0.3s ease;
+			}
+		}
 	}
 
 	.weapons {
+		background-color: black;
 		display: flex;
 		justify-content: space-around;
-		cursor: pointer;
+
+		p {
+			color: white;
+			font-size: 22px;
+			font-weight: 400;
+			z-index: 2;
+			cursor: pointer;
+		}
 
 		p:hover {
-			background-color: #2D2F3E;
+			text-decoration: underline;
 		}
 	}
 
 	.stickers {
+		background-color: black;
 		display: flex;
 		justify-content: space-around;
+
+		p {
+			color: white;
+			font-size: 22px;
+			cursor: pointer;
+		}
+
+		.dropdown-content li {
+			font-size: 16px;
+			color: black;
+			cursor: pointer;
+		}
+
+		ul {
+			columns: 2;
+			-webkit-columns: 2;
+			-moz-columns: 2;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+
+		li {
+			list-style-type: none;
+			padding-bottom: 5px;
+			padding-top: 5px;
+		}
 	}
 
 	.dropdown {
@@ -35,10 +159,11 @@ body, html {
 		display: none;
 		position: absolute;
 		background-color: #f9f9f9;
-		min-width: 160px;
+		min-width: 365px;
 		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-		padding: 12px 16px;
-		z-index: 1;
+		z-index: 2;
+		right: -120px;
+		left: auto;
 	}
 
 	.dropdown:hover .dropdown-content {
@@ -46,13 +171,31 @@ body, html {
 	}
 }
 
+//wrapping <Skin />
+.infinite-scroll-component {
+	//overrides infinite-scroll-component package css
+	overflow: hidden!important;
+
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	gap: 10px;
+	padding-left: 8%;
+	padding-right: 8%;
+}
+
 .skinItems {
-	display: flex;
-	flex-wrap: wrap;
+	ul {
+		position: fixed;
+		list-style: none;
+		padding-left: 1%;
+		cursor: pointer;
+	}
 }
 
 .Skin {
-	width: 25%;
+	position: relative;
+	transition: transform 0.3s; /* Optional: Adds transition effect on hover */
+	max-width: 350px;
 
 	h1 {
 		font-size: medium;
@@ -63,8 +206,6 @@ body, html {
 	}
 
 	.card {
-		max-width: 100%;
-		max-height: 700px;
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
@@ -78,25 +219,26 @@ body, html {
 
 		.title {
 			text-align: center;
-			background-color: #424242;
-			border-bottom: 5px solid white;
+			background-color: #dddddd;
+			border-bottom: 5px solid #F5F5F5;
+			border-top: 1px solid black;
 			z-index: 1;
 			border-radius: 6px 6px 0 0;
 
 			h1 {
-				color: white;
+				color: #333333;
 			}
 
 			h2 {
-				color: #A9A9A9;
+				color: #666666;
 			}
 		}
 
 		.picture {
 			position: relative;
 			background: rgb(133,69,69);
-			background: radial-gradient(circle, rgba(133,69,69,1) 57%, rgba(66,66,66,1) 100%);
-			border-bottom: 5px solid white;
+			background: radial-gradient(circle, rgba(221,221,221,1) 0%, rgba(0,0,0,1) 100%);
+			border-bottom: 5px solid #F5F5F5;
 
 			.stickers {
 				display: flex;
@@ -111,13 +253,107 @@ body, html {
 
 		.information {
 			text-align: center;
-			background-color: #424242;
+			background-color: #dddddd;
 			color: white;
 			border-radius: 0 0 6px 6px;
+			border-bottom: 1px solid black;
+
+			p {
+				font-weight: 600;
+				color: #333333;
+				margin-top: 0;
+				margin-bottom: 0;
+
+				&:not(:has(span)) {
+					margin-top: 10px;
+				}
+			}
+
+			.priceTag {
+				font-size: 25px;
+				margin-bottom: 10px;
+
+				span {
+					position: relative;
+					font-size: 35px;
+					top: 4px;
+					color: green;
+				}
+
+				.increase {
+					color: red;
+					font-size: 25px;
+					position: unset;
+				}
+
+				.decrease {
+					color: green;
+					font-size: 25px;
+					position: unset;
+				}
+
+				svg {
+					position: relative;
+					top: 4px;
+				}
+			}
+
+			.stickerPercentage {
+				margin-bottom: 10px;
+			}
+
+			.moreInfo, span {
+				color: #333333;
+				cursor: pointer;
+
+				:hover {
+					text-decoration: underline;
+				}
+			}
+
+			.Collapsible__trigger {
+				font-size: 18px;
+				font-weight: 600;
+				font-family: 'Roboto Condensed', sans-serif;
+			}
+
+			.Collapsible {
+				padding-bottom: 10px;
+			}
+
+			.statusIndicator {
+				svg {
+					font-size: 64px;
+					color: black;
+				}
+			}
 		}
 	}
 }
 
-.active {
-	background-color: #2D2F3E;
+.weaponActive {
+	text-decoration: underline;
 }
+
+.stickerActive {
+	font-weight: 600;
+	text-decoration: underline;
+}
+
+.wearActive {
+	font-weight: 600;
+	text-decoration: underline;
+}
+
+@media (max-width: 820px) {
+	.infinite-scroll-component {
+	  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+	  row-gap: 20px;
+	  gap: 10px;
+	  padding: 10px;
+	}
+  }
+
+
+
+
