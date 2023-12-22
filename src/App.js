@@ -34,7 +34,7 @@ function App() {
         setPage(prevPage => prevPage + 1);
       }
 
-      const url = `http://localhost:8080/getskins?page=${currentPage}&limit=20`;
+      const url = `http://localhost:8080/skin/getskins?page=${currentPage}&limit=20`;
       const stickers = [];
       
       Object.keys(activeStickers).map(key => {
