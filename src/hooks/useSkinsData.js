@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export const useSkinsData = (activeWeapons, activeStickers, wear) => {
     const [skins, setSkins] = useState([]);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
+    
+    const initialRender = useRef(true);
 
     const fetchMoreData = async (operation) => {
         try {
@@ -81,6 +83,24 @@ export const useSkinsData = (activeWeapons, activeStickers, wear) => {
             console.log("Error fetching data", error);
         }
     }
+
+    useEffect(() => {
+        const operation = "pageOne";
+
+        if (initialRender.current) {
+            fetchMoreData(operation);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (initialRender.current) {
+            initialRender.current = false;
+            return;
+        }
+        const operation = "pageOne";
+
+        fetchMoreData(operation);
+    }, [activeWeapons, activeStickers, wear])
 
     return { skins, hasMore, fetchMoreData };
 }
