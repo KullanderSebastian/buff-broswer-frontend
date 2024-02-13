@@ -20,8 +20,6 @@ function App() {
   const [ page, setPage ] = useState(1);
   const [ hasMore, setHasMore ] = useState(true);
 
-  const renderWears = ["Factory New", "Minimal Wear", "Field-Tested", "Well-Worn", "Battle-Scarred"];
-
   const fetchMoreData = async (operation) => {
     try {
       let currentPage = page;
@@ -76,7 +74,11 @@ function App() {
       const totalPages = data["meta"]["totalPages"];
       const fetchedPage  = data["meta"]["currentPage"];
 
-      console.log(data["data"])
+      if (data["data"].length === 0) {
+        setSkins([]);
+        setHasMore(false);
+        return;
+      }
 
       if (fetchedPage  <= totalPages) {
         if (operation === "pageOne") {
@@ -136,18 +138,11 @@ function App() {
         activeStickers={activeStickers} 
         setActiveStickers={setActiveStickers}
         wear={wear}
-        setWear={setWear}
+        handleWear={handleWear}
       />
 
       {skins ? 
         <div className="skinItems" id="skinItems">
-
-          <ul className="wear">
-          {renderWears.map((renderWear) => {
-            return <li className={wear.includes(renderWear) ? "wearActive" : ""} onClick={handleWear}>{renderWear}</li>
-          })}
-          </ul>
-
           <InfiniteScroll
             dataLength={skins.length}
             next={() => fetchMoreData("increment")}

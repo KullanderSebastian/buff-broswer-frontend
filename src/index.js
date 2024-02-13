@@ -8,24 +8,25 @@ import './index.scss';
 import App from './App';
 import Login from "./components/profile/Login";
 import Profile from "./components/profile/Profile";
+import { AuthProvider } from "./context/AuthContext";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />
-  },
-  {
-    path: "/login",
-    element: <Login />
-  },
-  {
-    path: "/profile",
-    element: <Profile />
-  }
+	{
+		path: "/",
+		element: <App />
+	},
+	{
+		path: "/login",
+		element: <Login />
+	},
+	{
+		path: "/profile",
+		element: <Profile />
+	}
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <RouterProvider
-    router={router}
-  />
+    <AuthProvider>
+        <RouterProvider router={router} />
+    </AuthProvider>
 );

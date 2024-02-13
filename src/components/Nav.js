@@ -1,13 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useFormik } from "formik";
-import { CgProfile } from "react-icons/cg";
-import Login from "../components/profile/Login";
+import { IoMdArrowDropdown } from "react-icons/io";
+import { IoMdArrowDropup } from "react-icons/io";
+import buffBrowserIcon from "../img/Browser.png";
+import Collapsible from 'react-collapsible';
 
-function Nav({ activeWeapons, setActiveWeapons, activeStickers, setActiveStickers, wear, setWear }) {
+import Login from "../components/profile/Login";
+import { useAuth } from "../context/AuthContext";
+
+function Nav({ activeWeapons, setActiveWeapons, activeStickers, setActiveStickers, wear, handleWear }) {
     const resizeElementRef = useRef(null);
     const [elementSize, setElementSize] = useState({ width: 0, height: 0 });
     const [inputValue, setInputValue] = useState("");
     const [filteredData, setFilteredData] = useState([]);
+    const [open, setOpen] = useState(false);
+    const { isLoggedIn } = useAuth();
     const inputRef = useRef(null);
 
     const autocompleteData = [
@@ -49,6 +55,8 @@ function Nav({ activeWeapons, setActiveWeapons, activeStickers, setActiveSticker
         "Katowice 2015": ["LGB eSports (Foil)","Titan (Foil)","Vox Eminor (Foil)","3DMAX (Foil)","Counter Logic Gaming (Foil)","Cloud9 G2A (Foil)","Flipsid3 Tactics (Foil)","Natus Vincere (Foil)","HellRaisers (Foil)","Fnatic (Foil)","Keyd Stars (Foil)","Virtus.pro (Foil)","Ninjas in Pyjamas (Foil)","Team EnVyUs (Foil)","TSM Kinguin (Foil)","ESL One (Foil)","PENTA Sports (Foil)","Vox Eminor (Holo)","Titan (Holo)","Natus Vincere (Holo)","LGB eSports (Holo)","Cloud9 G2A (Holo)","Counter Logic Gaming (Holo)","Flipsid3 Tactics (Holo)","Virtus.pro (Holo)","Keyd Stars (Holo)","3DMAX (Holo)","HellRaisers (Holo)","Fnatic (Holo)","TSM Kinguin (Holo)","Ninjas in Pyjamas (Holo)","Team EnVyUs (Holo)","PENTA Sports (Holo)","Vox Eminor","LGB eSports","Titan","3DMAX","HellRaisers","Flipsid3 Tactics","Cloud9 G2A","Counter Logic Gaming","Keyd Stars","Natus Vincere","Virtus.pro","Fnatic","Team EnVyUs","TSM Kinguin","Ninjas in Pyjamas","PENTA Sports","ESL One"]
     }
 
+    const renderWears = ["Factory New", "Minimal Wear", "Field-Tested", "Well-Worn", "Battle-Scarred"];
+
     const filterData = (input) => {
         return autocompleteData.filter(item => item.toLowerCase().includes(input.toLowerCase()));
     }
@@ -64,20 +72,25 @@ function Nav({ activeWeapons, setActiveWeapons, activeStickers, setActiveSticker
         setInputValue(item);
         setFilteredData([])
 
-        inputRef.current.focus();
+        //Had to use direct DOM manipulation even though it is not recommend with react, was the only way to get the focus to work. Will have to do for now. 
+        document.querySelector('input[type="text"]').focus();
+        //inputRef.current.focus();
     }
  
     const handleWeaponChoice = (e, searchParam) => {
         let weapon;
+        //setActiveWeapons([]);
 
         if (searchParam != null) {
             if (searchParam === "") {
                 setActiveWeapons([]);
                 return;
             } else {
+                setActiveWeapons([]);
                 weapon = searchParam;
             }
         } else {
+            setInputValue("");
             weapon = e.target.innerHTML;
         }
 
@@ -90,7 +103,11 @@ function Nav({ activeWeapons, setActiveWeapons, activeStickers, setActiveSticker
     
     const handleStickerChoice = (e) => {
         const sticker = e.target.innerHTML;
-        const tournament = e.currentTarget.parentElement.parentElement.parentElement.getAttribute("data-tournament");
+        let tournament = e.currentTarget.parentElement.parentElement.parentElement.getAttribute("data-tournament");      
+        
+        if (!tournament) {
+            tournament = e.currentTarget.parentElement.getAttribute("data-tournament");
+        }
         
         const newActiveStickers = { ...activeStickers };
         
@@ -105,7 +122,11 @@ function Nav({ activeWeapons, setActiveWeapons, activeStickers, setActiveSticker
 
     const handleStickerType = (e) => {
         const stickerType = e.target.innerHTML.split(" ")[1];
-        const tournament = e.currentTarget.parentElement.parentElement.parentElement.getAttribute("data-tournament");
+        let tournament = e.currentTarget.parentElement.parentElement.parentElement.getAttribute("data-tournament");
+        
+        if (!tournament) {
+            tournament = e.currentTarget.parentElement.getAttribute("data-tournament")
+        }   
 
         const newActiveStickers = { ...activeStickers };
 
@@ -129,7 +150,11 @@ function Nav({ activeWeapons, setActiveWeapons, activeStickers, setActiveSticker
     }
 
     const handleClearStickers = (e) => {
-        const tournament = e.currentTarget.parentElement.parentElement.parentElement.getAttribute("data-tournament");
+        let tournament = e.currentTarget.parentElement.parentElement.parentElement.getAttribute("data-tournament");
+
+        if (!tournament) {
+            tournament = e.currentTarget.parentElement.getAttribute("data-tournament")
+        }   
 
         const newActiveStickers = { ...activeStickers };
 
@@ -160,45 +185,229 @@ function Nav({ activeWeapons, setActiveWeapons, activeStickers, setActiveSticker
     }, []);
 
     useEffect(() => {
-        console.log("width: " + elementSize.width + " height: " + elementSize.height)
+        //console.log("width: " + elementSize.width + " height: " + elementSize.height)
 
         document.getElementById('skinItems').style.paddingTop = elementSize["height"] + "px";
     }, [elementSize]);
+
+    useEffect(() => {
+        if (open) {
+            document.body.classList.add("noScroll");
+        } else {
+            document.body.classList.remove("noScroll");
+        }
+    }, [open])
 
     const onSubmit = async (e) => {
         e.preventDefault()
         console.log(inputValue)
         handleWeaponChoice("", inputValue)
+
+        if (open) {
+            setOpen(!open);
+        }
     }
 
+    const navigateToHome = () => {
+        window.location.href = 'http://localhost:3000/';
+    };
+
+    const createTrigger = (name) => (
+        <div>
+            {name} <IoMdArrowDropdown className="arrow" />
+        </div>
+    );
+    
+    const createTriggerWhenOpen = (name) => (
+        <div>
+            {name} <IoMdArrowDropup className="arrow" />
+        </div>
+    );
+
+    const triggerWeapons = createTrigger("Weapons");
+    const triggerWeaponsWhenOpen = createTriggerWhenOpen("Weapons");
+
+    const triggerWear = createTrigger("Wear");
+    const triggerWearWhenOpen = createTriggerWhenOpen("Wear");
+
+    const triggerKatowice2014 = createTrigger("Katowice 2014");
+    const triggerKatowice2014WhenOpen = createTriggerWhenOpen("Katowice 2014");
+
+    const triggerCologne2014 = createTrigger("Cologne 2014");
+    const triggerCologne2014WhenOpen = createTriggerWhenOpen("Cologne 2014");
+
+    const triggerDreamHack2014 = createTrigger("DreamHack 2014");
+    const triggerDreamHack2014WhenOpen = createTriggerWhenOpen("DreamHack 2014");
+
+    const triggerKatowice2015 = createTrigger("Katowice 2015");
+    const triggerKatowice2015WhenOpen = createTriggerWhenOpen("Katowice 2015");
+
+    const handleHamburger = (e) => {
+        e.preventDefault();
+
+        setOpen(!open);
+    }
 
     return (
         <div>
             <div className="Nav" id="Nav">
-                <form className="searchForm" onSubmit={onSubmit}>
-                    <input
-                        type="text"
-                        value={inputValue}
-                        onChange={handleInputChange}
-                        placeholder="Fire Serpent"
-                        ref={inputRef}
-                    />
-                    <label for="search" className="searchLabel">Search Skin</label>
-                    <ul>
-                        {filteredData.map(item => (
-                            <li key={item} onClick={() => handleItemSelection(item)}>
-                                {item}
-                            </li>
-                        ))}
-                    </ul>
-                    
+                <div className="searchForm">
+                    <img onClick={navigateToHome} style={{cursor: 'pointer'}} src={buffBrowserIcon} className="buffBrowserIcon" alt="Website icon" />
 
-                    <div className="profileIcon">
-                        <a href="/login">
-                            <CgProfile />
-                        </a>
+                    <div className="searchlogincontainer">
+                        <form onSubmit={onSubmit}>
+                            <input
+                                type="text"
+                                value={inputValue}
+                                onChange={handleInputChange}
+                                placeholder="Fire Serpent"
+                                ref={inputRef}
+                            />
+                            <label for="search" className="searchLabel">Search For Skins</label>
+                            <ul>
+                                {filteredData.map(item => (
+                                    <li key={item} onClick={() => handleItemSelection(item)}>
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                        </form>
+
+                        {isLoggedIn ? 
+                            <div className="profile"><a href="/profile">Profile</a></div> 
+                        :
+                            <div className="login">
+                                <Login />
+                            </div>
+                        }
                     </div>
-                </form>
+                </div>
+
+                <div className="mobileMenu">
+                    <div className="hamburgerContainer">
+                        <img onClick={navigateToHome} style={{cursor: 'pointer'}} src={buffBrowserIcon} className="buffBrowserIcon" alt="Website icon" />
+                        
+                        <div className="hamburgerPlacement">
+                            <button className={`hamburger ${open ? "hamburgerOpen" : ""}`} onClick={handleHamburger}>
+                                <div />
+                                <div />
+                                <div />
+                            </button>
+                        </div>
+                        
+                        <form className={`hamburgerMenu ${open ? "hamburgerMenuOpen" : "" }`} onSubmit={onSubmit}>
+                            <div className="hamburgerSearch">
+                              <input
+                                    type="text"
+                                    value={inputValue}
+                                    onChange={handleInputChange}
+                                    placeholder="Fire Serpent"
+                                    ref={inputRef}
+                                />
+                                <button type="submit">Search</button>
+                            </div>
+                            
+                            {isLoggedIn ? 
+                                <div className="profile"><a href="/profile">Profile</a></div> 
+                            :
+                                <div className="login">
+                                    <Login />
+                                </div>
+                            }
+                            
+                        </form>
+                    </div>
+                    <Collapsible className="weaponsMobile" trigger={triggerWeapons} triggerWhenOpen={triggerWeaponsWhenOpen}>
+                        {weapons.map(weapon => (
+                            <p
+                            className={activeWeapons.includes(weapon) ? "weaponActiveMobile" : ""}
+                            key={weapon} 
+                            onClick={handleWeaponChoice}
+                            >
+                                {weapon}
+                            </p>
+                        ))}
+                    </Collapsible>
+                    <Collapsible className="weaponsMobile" trigger={triggerWear} triggerWhenOpen={triggerWearWhenOpen}>
+                    {renderWears.map((renderWear) => {
+                        return <p className={wear.includes(renderWear) ? "wearActiveMobile" : ""} onClick={handleWear}>{renderWear}</p>
+                    })}
+                    </Collapsible>
+                    <Collapsible className="weaponsMobile" trigger={triggerKatowice2014} triggerWhenOpen={triggerKatowice2014WhenOpen}>
+                        <div className="mobileMenuGrid">
+                            <ul data-tournament="Katowice 2014">
+                                <li onClick={handleClearStickers}>Clear stickers</li>
+                                <li onClick={handleStickerType}>All (Holo)</li>
+                                <li onClick={handleStickerType}>All (Foil)</li>
+                                <li onClick={handleStickerType}>All Paper</li>
+                            {stickerData["Katowice 2014"].map(sticker => {
+                            return (
+                                <li
+                                    className={activeStickers["Katowice 2014"].includes(sticker) ? "stickerActive" : ""}
+                                    onClick={handleStickerChoice} 
+                                    key={`${"Katowice 2014"} | ${sticker}`}>{sticker}
+                                </li>
+                            )
+                            })}
+                            </ul>
+                        </div>
+                    </Collapsible>
+                    <Collapsible className="weaponsMobile" trigger={triggerCologne2014} triggerWhenOpen={triggerCologne2014WhenOpen}>
+                        <div className="mobileMenuGrid">
+                            <ul data-tournament="Cologne 2014">
+                                <li onClick={handleClearStickers}>Clear stickers</li>
+                                <li onClick={handleStickerType}>All (Holo)</li>
+                                <li onClick={handleStickerType}>All Paper</li>
+                            {stickerData["Cologne 2014"].map(sticker => {
+                            return (
+                                <li
+                                    className={activeStickers["Cologne 2014"].includes(sticker) ? "stickerActive" : ""}
+                                    onClick={handleStickerChoice} 
+                                    key={`${"Cologne 2014"} | ${sticker}`}>{sticker}
+                                </li>
+                            )
+                            })}
+                            </ul>
+                        </div>
+                    </Collapsible>
+                    <Collapsible className="weaponsMobile" trigger={triggerDreamHack2014} triggerWhenOpen={triggerDreamHack2014WhenOpen}>
+                        <div className="mobileMenuGrid">
+                            <ul data-tournament="Dreamhack 2014">
+                                <li onClick={handleClearStickers}>Clear stickers</li>
+                                <li onClick={handleStickerType}>All (Holo)</li>
+                                <li onClick={handleStickerType}>All (Foil)</li>
+                                <li onClick={handleStickerType}>All Paper</li>
+                            {stickerData["Dreamhack 2014"].map(sticker => {
+                            return (
+                                <li
+                                    className={activeStickers["Dreamhack 2014"].includes(sticker) ? "stickerActive" : ""}
+                                    onClick={handleStickerChoice} 
+                                    key={`${"Dreamhack 2014"} | ${sticker}`}>{sticker}
+                                </li>
+                            )
+                            })}
+                            </ul>
+                        </div>
+                    </Collapsible>
+                    <Collapsible className="weaponsMobile" trigger={triggerKatowice2015} triggerWhenOpen={triggerKatowice2015WhenOpen}>
+                        <div className="mobileMenuGrid">
+                            <ul data-tournament="Katowice 2015">
+                                    <li onClick={handleClearStickers}>Clear stickers</li>
+                                    <li onClick={handleStickerType}>All (Holo)</li>
+                                    <li onClick={handleStickerType}>All (Foil)</li>
+                                    <li onClick={handleStickerType}>All Paper</li>
+                                {stickerData["Katowice 2015"].map(sticker => {
+                                return (
+                                    <li
+                                        className={activeStickers["Katowice 2015"].includes(sticker) ? "stickerActive" : ""}
+                                        onClick={handleStickerChoice} 
+                                        key={`${"Katowice 2015"} | ${sticker}`}>{sticker}
+                                    </li>                                )
+                                })}
+                            </ul>
+                        </div>
+                    </Collapsible>
+                </div>
 
                 <div className="weapons">
                     {weapons.map(weapon => (
@@ -209,12 +418,18 @@ function Nav({ activeWeapons, setActiveWeapons, activeStickers, setActiveSticker
                         </p>
                     ))}
                 </div>
+
+                <div className="wears">
+                {renderWears.map((renderWear) => {
+                    return <p className={wear.includes(renderWear) ? "wearActive" : ""} onClick={handleWear}>{renderWear}</p>
+                })}
+                </div>
                 
                 <div className="stickers">
                     {Object.entries(stickerData).map(([tournament, stickers]) => {
                         return ( 
                         <div className="dropdown" key={tournament} data-tournament={tournament}>
-                            <p>{tournament}</p>
+                            <p>{tournament} <IoMdArrowDropdown /></p>
                             <div className="dropdown-content">
                                 <ul>
                                     <li onClick={handleClearStickers}>Clear stickers</li>

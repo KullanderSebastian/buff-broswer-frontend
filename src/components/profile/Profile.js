@@ -1,54 +1,99 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import PhoneInput from 'react-phone-number-input';
 import "react-phone-number-input/style.css";
-import PhoneInput from "react-phone-number-input";
+import * as Yup from 'yup';
 import WatchlistItem from "./WatchlistItem";
- 
+import SkinWatchlistForm from "./SkinWatchlistForm";
+import { HiOutlineMail } from "react-icons/hi";
+import { HiOutlinePhone } from "react-icons/hi";
+import NavProfile from "./NavProfile";
+import fetchWithTokenRefresh from "../../utils/fetchWithTokenRefresh";
+  
 const Profile = () => {
     const [userData, setUserData] = useState();
-    const [phoneNumber, setPhoneNumber] = useState();
+    const [watchlist, setWatchlist] = useState();
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [phone, setPhone] = useState("");
+    const [error, setError] = useState("");
+    const [refreshState, setRefreshState] = useState(false);
+    const [notificationPreference, setNotificationPreference] = useState();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const getTokenFromUrl = () => {
-            const url = new URL(window.location.href);
-            const token = url.searchParams.get("token");
-            const gId = url.searchParams.get("gId");
+    const phoneSchema = Yup.object().shape({
+        phone: Yup.string()
+            .required("Phone number is required")
+    });
 
-            if (token) {
-                localStorage.setItem("token", token);
-                localStorage.setItem("gId", gId);
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            await phoneSchema.validate({ phone });
+            setError("");
 
-                url.searchParams.delete("token");
-                url.searchParams.delete("gId");
-                window.history.replaceState({}, document.title, url.toString())
+            const response = await fetchWithTokenRefresh("http://localhost:8080/user/updatephone", {
+                method: "POST",
+                body: JSON.stringify({
+                    phone: phone
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
-        };
 
-        getTokenFromUrl();
-
-        const isAuthenticated = localStorage.getItem("token");
-
-        if (!isAuthenticated) {
-            navigate("/login");
+            const data = await response.json();
+            setRefreshState(true);
+            console.log(data)
+        } catch (err) {
+            setError(err.message);
         }
+    }
 
+    const handleRadioSubmit = async (event) => {
+        event.preventDefault();
+
+        try {
+            const response = await fetchWithTokenRefresh("http://localhost:8080/user/updatenotificationpreference", {
+                method: "POST",
+                body: JSON.stringify({
+                    notificationPreference: notificationPreference
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+    
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+    
+            const data = await response.json();
+            alert("Notification preference changed.")
+        } catch (error) {
+            console.error(error);
+
+            if (error.message.includes("Redirecting to login.")) {
+                window.location.href = "http://localhost:8080/auth/google";
+            } else {
+                alert(error.message);
+            }
+        }
+    }
+
+    const handleNotificationPreference = (event) => {
+        setNotificationPreference(event.target.value);
+    }
+
+    useEffect(() => {
         async function fetchData() {
-            const url = "http://localhost:8080/user/getuser";
-            const token = localStorage.getItem("token");
-
-            console.log("TOKEN: " + token)
-
             try {
-                const response = await fetch(url, {
-                    method: "POST",
-                    body: JSON.stringify({
-                        gId: localStorage.getItem("gId")
-                    }),
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`
-                    }
+                const response = await fetchWithTokenRefresh("http://localhost:8080/user/getuser", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
                 });
     
                 if (!response.ok) {
@@ -56,39 +101,124 @@ const Profile = () => {
                 }
     
                 const data = await response.json();
-                console.log("User data:", data);
-                return data;
+                setUserData(data);
+                setWatchlist(data.watchlist);
+                setNotificationPreference(data.notificationPreference);
             } catch (error) {
-                console.error("Error fetching user data:", error);
+                console.error("Error fetching user data: ", error);
+
+                if (error.message.includes("Redirecting to login.")) {
+                    window.location.href = "http://localhost:8080/auth/google"; 
+                }
             }
         }
+    
+        fetchData();
+    }, [navigate]);
 
-        fetchData()
-            .then(data => {
-                setUserData(data);
-            })
-    }, []);
+    const handleModal = () => {
+        if (!modalIsOpen) {
+            setModalIsOpen(true);
+        } else {
+            setModalIsOpen(false);
+        }
+    }
+
+    const handleRemoveItem = async (itemId) => {
+        try {
+            const response = await fetchWithTokenRefresh("http://localhost:8080/user/removeitemfromwatchlist", {
+                method: "POST",
+                body: JSON.stringify({
+                    objectId: itemId,
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+
+            if (response.ok) {
+                setWatchlist(prevWatchlist => prevWatchlist.filter(item => item._id !== itemId));
+            } else {
+                console.error("Failed to remove item from watchlist");
+            }
+        } catch(error) {
+            console.error("An error occurred: ", error);
+        }
+    }
+
+    const addToWatchlistState = (newItem) => {
+        setWatchlist((currentWatchlist) => [...currentWatchlist, newItem]);
+    }
+
+    console.log('handleModal function:', handleModal);
 
     return (
         <div>
-            <h1>{userData ? userData.displayName : ""}</h1>
-            <p>email: {userData ? userData.email : ""}</p>
-            <p>Phone: <PhoneInput
-                placeholder="Enter phone number"
-                value={phoneNumber}
-                onChange={setPhoneNumber}
-            /></p>
-            <button>Save</button>
-            <h1>Watchlist</h1>
-            <button>Add item</button>
-            <div>
-                {userData ? userData.watchlist.map((skin) => (
-                    <WatchlistItem 
-                        itemName={skin.itemName}
-                        wear={skin.wear}
-                        stickerName={skin.stickerName} 
-                    />
-                )) : ""}
+            <NavProfile />
+            <div className="profile">
+                <div className="information">
+                    <h1>{userData ? userData.displayName : ""}</h1>
+                    <p><HiOutlineMail /> {userData ? userData.email : ""}</p>
+                    {userData ? (userData.phone === "" ? (
+                        <form className="telephone" onSubmit={handleSubmit}>
+                            <PhoneInput
+                                international
+                                value={phone}
+                                onChange={setPhone}
+                            />
+                            {error && <p style={{ color: 'red' }}>{error}</p>}
+                            <button type="submit">Save</button>
+                        </form>
+                    ) : <p className="phoneIcon"><HiOutlinePhone /> {userData.phone}</p>) : <p>Loading...</p>}
+                    <form className="preference" onSubmit={handleRadioSubmit}>
+                        <h2>Notification Preferences</h2>
+                        <label>
+                            Email
+                            <input
+                                type="radio"
+                                value="Email"
+                                checked={notificationPreference === "Email"}
+                                onChange={handleNotificationPreference}
+                            />
+                        </label>
+                        <label>
+                            Phone
+                            <input
+                                disabled={!userData || userData.phone === ""}
+                                type="radio"
+                                value="Phone"
+                                checked={notificationPreference === "Phone"}
+                                onChange={handleNotificationPreference}
+                            />
+                        </label>
+                        <button type="submit">Save</button>
+                    </form>
+                </div>
+                
+                <div className="watchlist">
+                    <h1>Watchlist</h1>
+                    <button onClick={handleModal}>Add item</button>
+
+
+                    <div id="addItemModal" class="modal" style={modalIsOpen ? { display: "block" } : { display: "none" }}>
+                        <div class="modalContent">
+                            <span onClick={handleModal} class="close">&times;</span>
+                            <SkinWatchlistForm onAddToWatchlistState={addToWatchlistState} onCloseModal={handleModal}/>
+                        </div>
+                    </div>
+
+                    <div className="watchlist">
+                        {watchlist ? watchlist.map((skin) => (
+                            <WatchlistItem
+                                key={skin._id}
+                                itemName={skin.itemName}
+                                wear={skin.wear}
+                                stickerName={skin.stickerName}
+                                onRemove={() => handleRemoveItem(skin._id)} 
+                            />
+                        )) : ""}
+                    </div>
+                </div>
             </div>
         </div>
     );
