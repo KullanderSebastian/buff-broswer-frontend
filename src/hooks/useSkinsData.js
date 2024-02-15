@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { fetchSkins } from "../api/skinService";
 
 export const useSkinsData = (activeWeapons, activeStickers, wear) => {
     const [skins, setSkins] = useState([]);
@@ -7,100 +8,53 @@ export const useSkinsData = (activeWeapons, activeStickers, wear) => {
     
     const initialRender = useRef(true);
 
+    const getStickersArray = () => 
+        Object.entries(activeStickers).reduce((acc, [key, stickers]) => 
+            acc.concat(stickers.map(sticker => `${sticker} | ${key}`)), []);
+
     const fetchMoreData = async (operation) => {
         try {
-            let currentPage = page;
+            const currentPage = operation === "increment" ? page + 1 : 1;
 
-            if (operation === "pageOne") {
-                currentPage = 1;
-                setPage(1);
-            } else if (operation === "increment") {
-                currentPage = page + 1;
-                setPage(prevPage => prevPage + 1);
-            }
-
-            const url = `http://localhost:8080/skin/getskins?page=${currentPage}&limit=20`;
-            const stickers = [];
-
-            Object.keys(activeStickers).map(key => {
-                activeStickers[key].map(sticker => {
-                    stickers.push(`${sticker} | ${key}`);
-                })
+            const data = await fetchSkins({
+                currentPage,
+                stickers: getStickersArray(),
+                activeWeapons,
+                wear,
             });
 
-            let body_object = {
-                "sticker_name": stickers
-            };
+            console.log(JSON.stringify(data, null, 2));
 
-            if (activeWeapons.length > 0) {
-                if (wear.length > 0) {
-                    const combinations = [];
-                    for (const weapon of activeWeapons) {
-                        for (const wearCondition of wear) {
-                            combinations.push(`${weapon} ${wearCondition}`);
-                        }
-                    }
-                    body_object["search_parameters"] = combinations;
-                } else {
-                    body_object["search_parameters"] = activeWeapons;
-                }
-            } else if (wear.length > 0) {
-                body_object["search_parameters"] = wear;
-            }
-
-            const response = await fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },  
-                body: JSON.stringify(body_object)
-            });
-
-            const data = await response.json();
-
-            const totalPages = data["meta"]["totalPages"];
-            const fetchedPage  = data["meta"]["currentPage"];
-
-            if (data["data"].length === 0) {
-                setSkins([]);
-                setHasMore(false);
-                return;
-            }
-
-            if (fetchedPage  <= totalPages) {
-                if (operation === "pageOne") {
-                    setSkins(data["data"]);
-                    setHasMore(true);
-                    window.scrollTo({ top: 0, left: 0})
-                } else {
-                    setSkins(prevSkins => [...prevSkins, ...data["data"]]);
-                }
-            } else {
-                setHasMore(false);
-            }
-
+            setPage(currentPage);
+            handleFetchResponse(data, operation);
         } catch (error) {
-            console.log("Error fetching data", error);
+            console.error("Error fetching data", error);
         }
-    }
+    };
 
-    useEffect(() => {
-        const operation = "pageOne";
+    const handleFetchResponse = (response, operation) => {
+        const { data, meta } = response;
 
-        if (initialRender.current) {
-            fetchMoreData(operation);
-        };
-    }, []);
-
-    useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false;
+        if (!data || data.length === 0) {
+            setSkins([]);
+            setHasMore(false);
             return;
         }
-        const operation = "pageOne";
 
-        fetchMoreData(operation);
-    }, [activeWeapons, activeStickers, wear])
+        // Use `operation` to determine how to update state
+        if (operation === "pageOne") {
+            setSkins(data); // Reset skins list for "page one" operation
+        } else {
+            setSkins(prevSkins => [...prevSkins, ...data]); // Append skins for "increment" operation
+        }
+
+        // Update `hasMore` based on the current page and total pages
+        setHasMore(meta.currentPage < meta.totalPages);
+    };
+
+    useEffect(() => {
+        fetchMoreData("pageOne");
+    }, [activeWeapons, activeStickers, wear]);
 
     return { skins, hasMore, fetchMoreData };
 }
