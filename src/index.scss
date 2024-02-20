@@ -61,11 +61,16 @@ body, html {
 			opacity: 0.7;
 		}
 
-		ul {
+		.dropdown {
 			position: absolute;
+			top: 63px;
+		}
+
+		ul {
+			margin:0;
+			padding:0;
 			width: 49vw;
 			background-color: white;
-			top: 45px;
 			box-sizing: border-box;
 			z-index: 100;
 			max-height: 50vh;
@@ -79,7 +84,8 @@ body, html {
 			cursor: pointer;
 
 			&:hover {
-				background-color: gray;
+				background-color: rgb(104, 85, 224);
+				color: white;
 			}
 		}
 
@@ -384,10 +390,6 @@ body, html {
 
 	li {
 		list-style: none;
-	}
-
-	.Collapsible:first-child {
-		padding-top: 74px;
 	}
 
 	.Collapsible__trigger {

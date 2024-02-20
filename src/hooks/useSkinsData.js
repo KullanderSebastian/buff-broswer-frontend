@@ -6,8 +6,6 @@ export const useSkinsData = (activeWeapons, activeStickers, wear) => {
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     
-    const initialRender = useRef(true);
-
     const getStickersArray = () => 
         Object.entries(activeStickers).reduce((acc, [key, stickers]) => 
             acc.concat(stickers.map(sticker => `${sticker} | ${key}`)), []);
@@ -22,8 +20,6 @@ export const useSkinsData = (activeWeapons, activeStickers, wear) => {
                 activeWeapons,
                 wear,
             });
-
-            console.log(JSON.stringify(data, null, 2));
 
             setPage(currentPage);
             handleFetchResponse(data, operation);
@@ -41,14 +37,12 @@ export const useSkinsData = (activeWeapons, activeStickers, wear) => {
             return;
         }
 
-        // Use `operation` to determine how to update state
         if (operation === "pageOne") {
-            setSkins(data); // Reset skins list for "page one" operation
+            setSkins(data);
         } else {
-            setSkins(prevSkins => [...prevSkins, ...data]); // Append skins for "increment" operation
+            setSkins(prevSkins => [...prevSkins, ...data]);
         }
 
-        // Update `hasMore` based on the current page and total pages
         setHasMore(meta.currentPage < meta.totalPages);
     };
 
