@@ -1,0 +1,180 @@
+.Skin {
+	position: relative;
+	transition: transform 0.3s; /* Optional: Adds transition effect on hover */
+	max-width: 350px;
+	min-width: 187px;
+	
+
+	h1 {
+		font-size: medium;
+	}
+
+	h2 {
+		font-size: small;
+	}
+
+	.card {
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+		margin-bottom: 1em;
+		box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+		img {
+			max-width: 100%;
+			margin-top: -20px;
+		}
+
+		.title {
+			text-align: center;
+			background-color: #dddddd;
+			border-bottom: 5px solid #F5F5F5;
+			z-index: 1;
+			border-radius: 6px 6px 0 0;
+
+			h1 {
+				display: -webkit-box;
+				text-overflow: ellipsis;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+				color: #333333;
+			}
+
+			h2 {
+				color: #666666;
+			}
+		}
+
+		.picture {
+			position: relative;
+			background: rgb(133,69,69);
+			background: radial-gradient(circle, rgba(245,245,245,1) 0%, rgba(104,85,224,1) 100%);
+			border-bottom: 5px solid #F5F5F5;
+
+			.cardStickers {
+				display: flex;
+				position: absolute;
+				bottom: 0;
+		
+				img {
+					width: 25%;
+				}
+			}
+		}
+
+		.information {
+			text-align: center;
+			background-color: #dddddd;
+			color: white;
+			border-radius: 0 0 6px 6px;
+
+			p {
+				font-weight: 600;
+				color: #333333;
+				margin-top: 0;
+				margin-bottom: 0;
+
+				&:not(:has(span)) {
+					margin-top: 10px;
+				}
+			}
+
+			.inline {
+				display: flex;
+				align-items: center;
+				justify-content: space-evenly;
+				margin-left: 17%;
+				margin-right: 17%;
+			}
+
+			.priceTag {
+				font-size: 25px;
+				margin-bottom: 10px;
+
+				span {
+					position: relative;
+					font-size: 35px;
+					top: 4px;
+					color: green;
+				}
+
+				.increase {
+					color: red;
+					font-size: 25px;
+					position: unset;
+				}
+
+				.decrease {
+					color: green;
+					font-size: 25px;
+					position: unset;
+				}
+
+				svg {
+					position: relative;
+					top: 4px;
+				}
+			}
+
+			.stickerPercentage {
+				margin-bottom: 10px;
+				margin-top: 9px;
+				
+				p { 
+					font-size: 14px;
+					font-weight: 400;
+					color: #CD957A;
+					background-color: silver;
+					display: inline;
+					padding: 3px;
+					border-radius: 5px;
+				}
+			}
+
+			.moreInfo, span {
+				color: #333333;
+				cursor: pointer;
+
+				:hover {
+					text-decoration: underline;
+				}
+			}
+
+			.Collapsible__trigger {
+				font-size: 14px;
+				font-weight: 600;
+				color: #D2A189;
+				font-family: 'Roboto Condensed', sans-serif;
+			}
+
+			.Collapsible {
+				padding-bottom: 10px;
+
+				p {
+					font-size: 14px;
+					font-weight: 400;
+				}
+			}
+
+			.statusIndicator {
+				svg {
+					font-size: 64px;
+					color: black;
+				}
+			}
+		}
+	}
+}
+
+//wrapping <Skin />
+.infinite-scroll-component {
+	//overrides infinite-scroll-component package css
+	overflow: hidden!important;
+
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	gap: 10px;
+	padding-left: 8%;
+	padding-right: 8%;
+}

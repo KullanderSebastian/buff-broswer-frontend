@@ -1,4 +1,5 @@
-import Login from "../components/profile/Login";
+import Login from "../Login/Login";
+import "./Navbar.scss";
 
 const Navbar = ({navigateToHome, buffBrowserIcon, onSubmit, inputValue, handleInputChange, inputRef, wrapperRef, isOpen, filteredData, handleItemSelection, isLoggedIn}) => {
     return (
@@ -8,6 +9,7 @@ const Navbar = ({navigateToHome, buffBrowserIcon, onSubmit, inputValue, handleIn
                     <div className="searchlogincontainer">
                         <form onSubmit={onSubmit}>
                             <input
+                                className="input-base input-white input-width-50"
                                 type="text"
                                 value={inputValue}
                                 onChange={handleInputChange}

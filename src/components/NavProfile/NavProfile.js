@@ -1,6 +1,7 @@
 import React from "react";
 import buffBrowserIcon from "../../img/Browser.png";
-import Logout from "./Logout";
+import Logout from "../Logout/Logout";
+import "./NavProfile.scss";
 
 const NavProfile = () => {
     const navigateToHome = () => {

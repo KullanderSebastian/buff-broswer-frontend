@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import fetchWithTokenRefresh from "../../utils/fetchWithTokenRefresh";
+import "./SkinWatchlistForm.scss";
 
 const skinItems = {
     "AK-47": {
@@ -2212,6 +2213,7 @@ const SkinWatchlistForm = ({ onAddToWatchlistState, onCloseModal }) => {
         <div>
             <form onSubmit={handleSubmit} className="watchlistForm" autoComplete="off">
                 <select 
+                    className="input-base input-black"
                     name="weaponType"
                     value={weaponType}
                     onChange={handleWeaponTypeSelectChange}
@@ -2227,6 +2229,7 @@ const SkinWatchlistForm = ({ onAddToWatchlistState, onCloseModal }) => {
                 </select>
 
                 <input
+                    className="input-base input-black"
                     type="text"
                     name="skinName"
                     value={skinName}
@@ -2252,8 +2255,8 @@ const SkinWatchlistForm = ({ onAddToWatchlistState, onCloseModal }) => {
                     </ul>
                 </div>
 
-                <select 
-                    className="wearSelect"
+                <select
+                    className="wearSelect input-base input-black"
                     name="wear"
                     value={wear}
                     onChange={handleWearSelectChange}
@@ -2275,6 +2278,7 @@ const SkinWatchlistForm = ({ onAddToWatchlistState, onCloseModal }) => {
                 </label>
 
                 <select 
+                    className="input-base input-black"
                     name="tournament"
                     value={stickerTournament}
                     onChange={handleTournamentSelectChange}
@@ -2286,6 +2290,7 @@ const SkinWatchlistForm = ({ onAddToWatchlistState, onCloseModal }) => {
                 </select>
                 
                 <input
+                    className="input-base input-black"
                     type="text"
                     name="stickerName"
                     value={stickerName}
@@ -2293,7 +2298,7 @@ const SkinWatchlistForm = ({ onAddToWatchlistState, onCloseModal }) => {
                     placeholder="Sticker name"
                 />
                 
-                <button disabled={!isFinalInput || !isFinalStickerInput} type="submit">Add to watchlist</button>
+                <button className="btn" disabled={!isFinalInput || !isFinalStickerInput} type="submit">Add to watchlist</button>
             </form>
         </div>
     );

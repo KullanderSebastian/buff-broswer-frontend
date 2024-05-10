@@ -1,6 +1,7 @@
 import InfiniteScroll from "react-infinite-scroll-component";
-import Skin from "./Skin";
-import stickers from "./../stickerUrls.json";
+import Skin from "../Skin/Skin.js";
+import stickers from "../../stickerUrls.json";
+import "./SkinList.scss";
 
 const SkinsList = ({ skins, fetchMoreData, hasMore }) => (
     <div className="skinItems" id="skinItems">

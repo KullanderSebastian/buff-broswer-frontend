@@ -1,4 +1,5 @@
 import { IoMdArrowDropdown } from "react-icons/io";
+import "./DesktopMenus.scss";
 
 const DesktopMenus = ({weapons, activeWeapons, handleWeaponChoice, renderWears, wear, handleWear, stickerData, handleClearStickers, handleStickerType, activeStickers, handleStickerChoice}) => {
     return (

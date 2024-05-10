@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
+body, html {
+	background-color: #F5F5F5;
+	padding: 0;
+	margin: 0;
+
+	p, h1, h2, h3, h4, h5, li, label {
+		font-family: 'Roboto Condensed', sans-serif;
+	}
+}
+
+.inputInvalid {
+	border: 2px solid red;
+}
+
+.noScroll {
+	overflow: hidden;
+	height: 100%;
+}
+
+.weaponActive {
+	font-weight: 600!important;
+	text-decoration: underline;
+}
+
+.stickerActive {
+	font-weight: 600;
+	text-decoration: underline;
+}
+
+.wearActive {
+	font-weight: 600;
+	text-decoration: underline;
+}
+
+.weaponActiveMobile {
+	background-color: rgb(104, 85, 224);
+	color: white;
+}
+
+.wearActiveMobile {
+	background-color: rgb(104, 85, 224);
+	color: white;
+}
+
+/* When the width drops below 1122px, show 5 cards per line */
+@media (max-width: 1410px) {
+	.infinite-scroll-component {
+		grid-template-columns: repeat(5, 1fr);
+	}
+
+	.weapons {
+		width: 60%!important;
+	}
+
+	.wears {
+		width: 60%!important;
+	}
+
+	.stickers {
+		width: 60%!important;
+	}
+}
+
+@media (max-width: 1180px) {
+	.infinite-scroll-component {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+@media (max-width: 980px) {
+	.Nav .searchForm {
+		input {
+			width: 40%;
+		}
+		
+		.searchLabel {
+			left: unset;
+		}
+	} 
+}
+
+@media (max-width: 945px) {
+	.infinite-scroll-component {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.weapons {
+		width: 70%!important;
+	}
+
+	.wears {
+		width: 70%!important;
+	}
+
+	.stickers {
+		width: 70%!important;
+	}
+}
+
+@media (max-width: 780px) {
+	.Nav .searchForm {
+		.buffBrowserIcon {
+			left: 0%;
+		}
+	}
+
+	.searchlogincontainer .login {
+		right: 2%;
+	}
+}
+
+@media (max-width: 720px) {
+	.infinite-scroll-component {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.weapons {
+		width: 85%!important;
+	}
+
+	.wears {
+		width: 85%!important;
+	}
+
+	.stickers {
+		width: 85%!important;
+	}
+}
+
+@media (max-width: 680px) {
+	.Nav .searchForm {
+		.buffBrowserIcon {
+			width: 130px;
+		}
+	}
+
+	.searchlogincontainer .login {
+		right: 2%;
+	}
+}
+
+@media (max-width: 559px) {
+	.Nav {
+		.weapons {
+			display: none;
+		}
+
+		.wears {
+			display: none;
+		}
+
+		.stickers {
+			display: none;
+		}
+	}
+
+	.skinItems {
+		padding-top: 25px!important;
+	}
+}
+
+@media (max-width: 475px) {
+	.infinite-scroll-component {
+		grid-template-columns: repeat(1, 1fr);
+	}
+}
+
+@media (max-width: 430px) {
+	.Nav .mobileMenu {
+		display: block;
+	}
+
+	.Nav {
+		.searchForm {
+			display: none;
+		}
+	}
+
+	.mobileMenu .Collapsible__trigger {
+		width: unset;
+	}
+
+	.Skin .card .information .inline {
+		justify-content: center;
+		gap: 10px;
+		margin-left: unset;
+		margin-right: unset;
+	}
+
+	.profile {
+		display: block;
+	}
+
+	.watchlist {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.profile .watchlist button {
+		margin-bottom: 2rem;
+	}
+
+	.modal .modalContent {
+		min-width: 75vw;
+	}
+}

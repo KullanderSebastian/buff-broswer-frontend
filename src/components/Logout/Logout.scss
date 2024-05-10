@@ -1,0 +1,18 @@
+.navProfile {
+    .logout {
+        position: absolute;
+		right: 5%;
+		line-height: 74px;
+
+		a {
+			color: white;
+			font-size: 1em;
+			font-weight: 600;
+			cursor: pointer;
+		}
+
+		a:hover {
+			text-decoration: underline;
+		}
+    }
+}

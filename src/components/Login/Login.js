@@ -1,4 +1,5 @@
 import React from "react";
+import "./Login.scss";
 
 const Login = () => {
     const handleLogin = (e) => {
@@ -7,7 +8,7 @@ const Login = () => {
 
     return (
         <div className="login">
-            <button onClick={handleLogin}>Login with Google</button>
+            <button className="btn" onClick={handleLogin}>Login with Google</button>
         </div>
     );
 };

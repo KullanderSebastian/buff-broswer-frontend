@@ -1,6 +1,7 @@
 import Collapsible from 'react-collapsible';
 import { HiOutlineCurrencyYen } from "react-icons/hi2";
 import { IoMdArrowDropdown } from "react-icons/io";
+import "./Skin.scss";
 
 function Skin(props) {
     const {weaponName, condition} = alterProps(props);
@@ -10,8 +11,7 @@ function Skin(props) {
         const weaponName = parts[0];
         const condition = parts[1].replace(")", "");
 
-        return { weaponName, condition };
-        
+        return { weaponName, condition }; 
     }
 
     return (

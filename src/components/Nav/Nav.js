@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import buffBrowserIcon from "../img/Browser.png";
-import { useAuth } from "../context/AuthContext";
-import { useOutsideAlerter } from "../hooks/useOutsideAlerter";
-import MobileCollapsibleMenus from "./MobileCollapsibleMenus";
-import HamburgerMenu from "./HamburgerMenu";
-import Navbar from "./Navbar";
-import DesktopMenus from "./DesktopMenus";
+import buffBrowserIcon from "../../img/Browser.png";
+import { useAuth } from "../../context/AuthContext";
+import { useOutsideAlerter } from "../../hooks/useOutsideAlerter";
+import MobileCollapsibleMenus from "../MobileCollapsibleMenus/MobileCollapsibleMenus";
+import HamburgerMenu from "../HamburgerMenu/HamburgerMenu";
+import Navbar from "../Navbar/Navbar";
+import DesktopMenus from "../DesktopMenus/DesktopMenus";
+import "./Nav.scss";
 
 //data for autocompleting search and handling stickers selection
-import { autoCompleteData } from "../data/autoCompleteData";
-import { stickerData } from "../data/stickerData";
+import { autoCompleteData } from "../../data/autoCompleteData";
+import { stickerData } from "../../data/stickerData";
 
 function Nav({ activeWeapons, setActiveWeapons, activeStickers, setActiveStickers, wear, handleWear }) {
     const resizeElementRef = useRef(null);

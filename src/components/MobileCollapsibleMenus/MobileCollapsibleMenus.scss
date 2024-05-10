@@ -1,0 +1,94 @@
+.mobileMenu {
+    .hamburgerContainer {
+        display: flex;
+        justify-content: space-between;
+        padding-left: 1%;
+        padding-right: 1%;
+        background-color: #CD957A;
+    }
+
+    .hamburger div {
+        width: 2rem;
+        height: 0.25rem;
+        background: rgb(104, 85, 224);
+        border-radius: 10px;
+        transition: all 0.3s linear;
+        position: relative;
+        transform-origin: 1px;
+    }
+
+    .hamburgerPlacement {
+		display: flex;
+		align-items: center;
+
+		button {
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			width: 2rem;
+			height: 2rem;
+			background: transparent;
+			border: none;
+			cursor: pointer;
+			padding: 0;
+			z-index: 10;
+		}
+	}
+
+	.mobileMenuGrid {
+        
+		ul {
+			column-count: 2;
+			column-gap: 20px;
+		}
+
+		li {
+			break-inside: avoid;
+			-webkit-column-break-inside: avoid;
+			page-break-inside: avoid;
+			box-decoration-break: clone;
+			padding-bottom: 5px;
+		}
+	}
+
+	img {
+		width: 200px;
+		padding-top: 3%;
+	}
+
+	li {
+		list-style: none;
+	}
+
+	.Collapsible__trigger {
+		display: block;
+		background-color: #CD957A;
+		width: 100%;
+		border-top: 1px solid rgb(104, 85, 224);
+		color: white;
+		padding: 10px;
+		font-size: 16px;
+		font-weight: 400;
+		font-family: 'Roboto Condensed', sans-serif;
+		text-align: center;
+	}
+
+	.Collapsible__contentInner {
+		p {
+			margin: 0;
+			padding: 10px;
+			text-align: center;
+			cursor: pointer;
+		}
+
+		li {
+			text-align: center;
+		}
+	}
+
+	.arrow {
+		position: relative;
+		top: 3px;
+	}
+}

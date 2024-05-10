@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Nav from "./components/Nav";
-import SkinsList from "./components/SkinsList";
+import Nav from "./components/Nav/Nav";
+import SkinsList from "./components/SkinList/SkinsList";
 import { useSkinsData } from "./hooks/useSkinsData";
 
 function App() {

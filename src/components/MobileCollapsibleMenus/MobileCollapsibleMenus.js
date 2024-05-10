@@ -1,5 +1,6 @@
 import React from "react";
-import CustomCollapsible from "./CustomCollapsible";
+import CustomCollapsible from "../CustomCollapsible/CustomCollapsible";
+import "./MobileCollapsibleMenus.scss";
 
 const DropdownMenu = ({
     weapons,

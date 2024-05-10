@@ -1,0 +1,159 @@
+.profile {
+	display: flex;
+	gap: 4rem;
+	position: relative;
+	justify-content: center;
+	padding-left: 8%;
+	padding-right: 8%;
+
+	.information {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		position: relative;
+
+		p:nth-child(3) {
+			position: relative;
+			left: -53px;
+		}
+
+		.phoneInput {
+			position: relative;
+    		left: -4px;
+		}
+
+		.PhoneInputInput {
+			width: 180px;
+		}
+
+		svg {
+			font-size: 23px;
+			position: relative;
+			top: 5px;
+		}
+
+		.telephone {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.preference {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		button {
+			margin-top: 16px;
+		}
+	}
+
+	.information::after {
+		content: "";
+		position: absolute;
+		right: -2rem;
+		top: 0;
+		bottom: 0;
+		width: 1px;
+		background-color: black;
+	}
+
+	.watchlistForm {
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		gap: 1rem;
+
+		input {
+			height: unset;
+		}
+
+		select {
+			height: unset;
+		}
+
+		.itemSelection {
+			margin-top: -10px;
+		}
+
+		.wearSelect:disabled, .wearSelect:disabled:hover {
+			background-color: #ccc;
+			color: #666;
+			cursor: not-allowed;
+			opacity: 0.5;
+			color: unset;
+			box-shadow: none;
+			border: 1px solid black;
+		}
+
+		ul {
+			position: absolute;
+			background-color: #F5F5F5;
+			left: 0;
+			top: 27%;
+			width: 100%;
+			box-sizing: border-box;
+			z-index: 11;
+			max-height: 250px;
+			overflow-y: auto;
+			list-style: none;
+			text-align: center;
+			margin: 0;
+			border-radius: 5px;
+		}
+
+		ul:nth-child(2) {
+			top: 86%;
+		}
+
+		li {
+			display: block;
+			padding: 3px 0;
+			cursor: pointer;
+		}
+
+		li:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+
+	.modalContent {
+		position: relative;
+		background-color: #fefefe;
+		margin: 15% auto;
+		padding: 30px 30px 15px 30px;
+		border: 1px solid #888;
+		width: 30%;
+		border-radius: 5px;
+	}
+
+	.close {
+		position: absolute;
+		color: #aaa;
+		font-size: 2rem;
+		font-weight: bold;
+		top: -1px;
+		right: 8px;
+	}
+	  
+	.close:hover,
+	.close:focus {
+		color: black;
+		text-decoration: none;
+		cursor: pointer;
+	}
+}

@@ -1,0 +1,94 @@
+.hamburgerOpen div:first-child {
+    transform: rotate(45deg);
+}
+
+.hamburgerOpen div:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburgerOpen div:nth-child(3) {
+    transform: rotate(-45deg);
+}
+
+.hamburgerMenu {
+    display: flex;
+    flex-direction: column;
+    background: #CD957A;
+    height: 100vh;
+    width: 85vw;
+    padding: 2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease-in-out;
+    z-index: 9;
+    transform: translateX(-101%);
+    justify-content: space-between;
+}
+
+.hamburgerMenu {
+    display: flex;
+    flex-direction: column;
+    background: #CD957A;
+    height: 100vh;
+    width: 85vw;
+    padding: 2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease-in-out;
+    z-index: 9;
+    transform: translateX(-101%);
+    justify-content: space-between;
+
+    .hamburgerSearch {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        button {
+            margin-top: 1vh;
+            width: 80%;
+            margin: 0 auto;
+            border: none;
+        }
+    }
+
+    .profile {
+        display: flex;
+        justify-content: center;
+
+        a {
+            color: white;
+            position: absolute;
+            bottom: 50px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    } 
+
+    a {
+        font-size: 2rem;
+        padding: 2rem 0;
+        font-weight: bold;
+        color: black;
+        text-decoration: none;
+        transition: color 0.3s linear;
+    }
+
+    input {
+        margin: 0 auto;
+    }
+
+    .login {
+        position: absolute;
+        bottom: 50px;
+        left: 30%;
+    }
+}
+
+.hamburgerMenuOpen {
+    transform: translateX(0);
+}

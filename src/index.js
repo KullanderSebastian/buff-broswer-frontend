@@ -4,11 +4,12 @@ import {
   createBrowserRouter,
   RouterProvider
 } from "react-router-dom";
-import './index.scss';
+import "./styles/utilities.scss";
 import App from './App';
-import Login from "./components/profile/Login";
-import Profile from "./components/profile/Profile";
+import Login from "./components/Login/Login";
+import Profile from "./components/Profile/Profile.js";
 import { AuthProvider } from "./context/AuthContext";
+import './styles/responsive-styles.scss';
 
 const router = createBrowserRouter([
 	{

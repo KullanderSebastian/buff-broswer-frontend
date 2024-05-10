@@ -3,12 +3,13 @@ import { useNavigate } from "react-router";
 import PhoneInput from 'react-phone-number-input';
 import "react-phone-number-input/style.css";
 import * as Yup from 'yup';
-import WatchlistItem from "./WatchlistItem";
-import SkinWatchlistForm from "./SkinWatchlistForm";
+import WatchlistItem from "../WatchlistItem/WatchlistItem";
+import SkinWatchlistForm from "../SkinWatchlistForm/SkinWatchlistForm";
 import { HiOutlineMail } from "react-icons/hi";
 import { HiOutlinePhone } from "react-icons/hi";
-import NavProfile from "./NavProfile";
+import NavProfile from "../NavProfile/NavProfile";
 import fetchWithTokenRefresh from "../../utils/fetchWithTokenRefresh";
+import "./Profile.scss";
   
 const Profile = () => {
     const [userData, setUserData] = useState();
@@ -167,7 +168,7 @@ const Profile = () => {
                                 onChange={setPhone}
                             />
                             {error && <p style={{ color: 'red' }}>{error}</p>}
-                            <button type="submit">Save</button>
+                            <button className="btn" type="submit">Save</button>
                         </form>
                     ) : <p className="phoneIcon"><HiOutlinePhone /> {userData.phone}</p>) : <p>Loading...</p>}
                     <form className="preference" onSubmit={handleRadioSubmit}>
@@ -191,13 +192,13 @@ const Profile = () => {
                                 onChange={handleNotificationPreference}
                             />
                         </label>
-                        <button type="submit">Save</button>
+                        <button className="btn" type="submit">Save</button>
                     </form>
                 </div>
                 
                 <div className="watchlist">
                     <h1>Watchlist</h1>
-                    <button onClick={handleModal}>Add item</button>
+                    <button className="btn" onClick={handleModal}>Add item</button>
 
 
                     <div id="addItemModal" class="modal" style={modalIsOpen ? { display: "block" } : { display: "none" }}>
