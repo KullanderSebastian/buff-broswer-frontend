@@ -7,6 +7,7 @@ import WatchlistItem from "../WatchlistItem/WatchlistItem";
 import SkinWatchlistForm from "../SkinWatchlistForm/SkinWatchlistForm";
 import { HiOutlineMail } from "react-icons/hi";
 import { HiOutlinePhone } from "react-icons/hi";
+import { FaRegEdit } from "react-icons/fa";
 import NavProfile from "../NavProfile/NavProfile";
 import fetchWithTokenRefresh from "../../utils/fetchWithTokenRefresh";
 import "./Profile.scss";
@@ -16,6 +17,7 @@ const Profile = () => {
     const [watchlist, setWatchlist] = useState();
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [phone, setPhone] = useState("");
+    const [isEditing, setIsEditing] = useState(false);
     const [error, setError] = useState("");
     const [refreshState, setRefreshState] = useState(false);
     const [notificationPreference, setNotificationPreference] = useState();
@@ -117,6 +119,12 @@ const Profile = () => {
         fetchData();
     }, [navigate]);
 
+    useEffect(() => {
+        if (refreshState) {
+            window.location.reload();
+        }
+    }, [refreshState]);
+
     const handleModal = () => {
         if (!modalIsOpen) {
             setModalIsOpen(true);
@@ -151,7 +159,16 @@ const Profile = () => {
         setWatchlist((currentWatchlist) => [...currentWatchlist, newItem]);
     }
 
-    console.log('handleModal function:', handleModal);
+    const editPhone = () => {
+        setPhone(userData.phone);
+        setIsEditing(true);
+    };
+
+    const cancelEdit = () => {
+        setIsEditing(false);
+        setPhone(userData.phone ? userData.phone : '');
+        setError('');
+    };
 
     return (
         <div>
@@ -160,7 +177,24 @@ const Profile = () => {
                 <div className="information">
                     <h1>{userData ? userData.displayName : ""}</h1>
                     <p><HiOutlineMail /> {userData ? userData.email : ""}</p>
-                    {userData ? (userData.phone === "" ? (
+                    {userData && userData.phone ? (
+                        isEditing ? (
+                            <form className="telephone" onSubmit={handleSubmit}>
+                                <PhoneInput
+                                    international
+                                    value={userData.phone}
+                                    onChange={setPhone}
+                                />
+                                {error && <p style={{ color: 'red' }}>{error}</p>}
+                                <button className="btn" type="submit">Save</button>
+                                <button className="btn" type="button" onClick={cancelEdit}>Cancel</button>
+                            </form>
+                        ) : (
+                            <p className="phoneIcon">
+                                <HiOutlinePhone /> {userData.phone} <FaRegEdit onClick={editPhone} className="edit" />
+                            </p>
+                        )
+                    ) : (
                         <form className="telephone" onSubmit={handleSubmit}>
                             <PhoneInput
                                 international
@@ -170,7 +204,7 @@ const Profile = () => {
                             {error && <p style={{ color: 'red' }}>{error}</p>}
                             <button className="btn" type="submit">Save</button>
                         </form>
-                    ) : <p className="phoneIcon"><HiOutlinePhone /> {userData.phone}</p>) : <p>Loading...</p>}
+                    )}
                     <form className="preference" onSubmit={handleRadioSubmit}>
                         <h2>Notification Preferences</h2>
                         <label>

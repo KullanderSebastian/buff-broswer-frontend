@@ -36,7 +36,7 @@ const DropdownMenu = ({
     const stickerRenderOptions = {
         "Katowice 2014": ["(Holo)", "(Foil)", "Paper"],
         "Cologne 2014": ["(Holo)", "Paper"],
-        "Dreamhack 2014": ["(Holo)", "(Foil)", "Paper"],
+        "DreamHack 2014": ["(Holo)", "(Foil)", "Paper"],
         "Katowice 2015": ["(Holo)", "(Foil)", "Paper"]
     }
 

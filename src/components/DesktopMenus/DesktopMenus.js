@@ -33,9 +33,9 @@ const DesktopMenus = ({weapons, activeWeapons, handleWeaponChoice, renderWears, 
                                 <li onClick={handleStickerType}>All Paper</li>
                                 {stickers.map(sticker => (
                                     <li
-                                    className={activeStickers[tournament].includes(sticker) ? "stickerActive" : ""}
-                                    onClick={handleStickerChoice} 
-                                    key={`${tournament} | ${sticker}`}>{sticker}
+                                        className={activeStickers[tournament].includes(sticker) ? "stickerActive" : ""}
+                                        onClick={handleStickerChoice} 
+                                        key={`${tournament} | ${sticker}`}>{sticker}
                                     </li>
                                 ))}
                             </ul>

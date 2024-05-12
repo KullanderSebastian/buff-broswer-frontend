@@ -9,7 +9,7 @@ function App() {
 	const [activeStickers, setActiveStickers] = useState({
 		"Katowice 2014": [],
 		"Cologne 2014": [],
-		"Dreamhack 2014": [],
+		"DreamHack 2014": [],
 		"Katowice 2015": []
 	});
 

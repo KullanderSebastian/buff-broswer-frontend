@@ -11,7 +11,7 @@ export const stickerData = {
         "Fnatic (Holo)","Ninjas in Pyjamas (Holo)","iBUYPOWER","Team Dignitas","Titan","London Conspiracy","Vox Eminor","Team LDLC.com","Cloud9","Natus Vincere","HellRaisers",
         "Epsilon eSports","dAT team","Virtus.Pro","Fnatic","Copenhagen Wolves","Ninjas in Pyjamas","MTS GameGod Wolf"
     ],
-    "Dreamhack 2014": [
+    "DreamHack 2014": [
         "Team Dignitas (Foil)","Cloud9 (Foil)","Fnatic (Foil)","Natus Vincere (Foil)","DreamHack Winter 2014 (Foil)","Ninjas in Pyjamas (Foil)","Virtus.Pro (Foil)",
         "Team Dignitas (Holo)","Fnatic (Holo)","Cloud9 (Holo)","Virtus.Pro (Holo)","Natus Vincere (Holo)","Ninjas in Pyjamas (Holo)","iBUYPOWER","Bravado Gaming",
         "Planetkey Dynamics","Team Dignitas","Flipsid3 Tactics","Copenhagen Wolves","Cloud9","HellRaisers","Team LDLC.com","myXMG","ESC Gaming","Ninjas in Pyjamas",

@@ -25,5 +25,5 @@ export const autoCompleteData = [
     "Warhawk", "Sacrifice", "Bullet Queen", "Vogue", "Clear Polymer", "Snack Attack", "Winterized", "Umbral Rabbit", "Panther Camo",
     "Coach Class", "Chainmail", "Scorpion", "Amber Fade", "Granite Marbleized", "Grassland Leaves", "Silver", "Grassland", "Space Race", "Dispatch",
     "Ocean Foam", "Red FragCam", "Pulse", "Ivory", "Fire Elemental", "Handgun", "Imperial", "Oceanic", "Imperial Dragon", "Turf", "Woodsman",
-    "Urban Hazard", "Obsidian", "Acid Etched", "Gnarled", "Lifted Spirits", "Wicked Sick"
+    "Urban Hazard", "Obsidian", "Acid Etched", "Gnarled", "Lifted Spirits", "Wicked Sick", "Inheritance", "Chrome Cannon", "Jawbreaker", "Block-18", "Etch Lord", "Slag",  
 ]

@@ -9,12 +9,15 @@
 	.information {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
 		position: relative;
+		align-items: center;
 
 		p:nth-child(3) {
 			position: relative;
-			left: -53px;
+		}
+
+		.edit {
+			margin-left: 5px;
 		}
 
 		.phoneInput {
@@ -35,7 +38,6 @@
 		.telephone {
 			display: flex;
 			flex-direction: column;
-			align-items: center;
 		}
 
 		.preference {
@@ -45,6 +47,7 @@
 		}
 
 		button {
+			margin: 0 auto;
 			margin-top: 16px;
 		}
 	}
