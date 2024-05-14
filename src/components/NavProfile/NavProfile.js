@@ -5,7 +5,7 @@ import "./NavProfile.scss";
 
 const NavProfile = () => {
     const navigateToHome = () => {
-        window.location.href = 'http://localhost:3000/';
+        window.location.href = 'https://www.buffbrowser.com';
     };
 
     return (

@@ -34,7 +34,7 @@ const Profile = () => {
             await phoneSchema.validate({ phone });
             setError("");
 
-            const response = await fetchWithTokenRefresh("http://localhost:8080/user/updatephone", {
+            const response = await fetchWithTokenRefresh("https://backend.buffbrowser.com:8080/user/updatephone", {
                 method: "POST",
                 body: JSON.stringify({
                     phone: phone
@@ -60,7 +60,7 @@ const Profile = () => {
         event.preventDefault();
 
         try {
-            const response = await fetchWithTokenRefresh("http://localhost:8080/user/updatenotificationpreference", {
+            const response = await fetchWithTokenRefresh("https://backend.buffbrowser.com:8080/user/updatenotificationpreference", {
                 method: "POST",
                 body: JSON.stringify({
                     notificationPreference: notificationPreference
@@ -80,7 +80,7 @@ const Profile = () => {
             console.error(error);
 
             if (error.message.includes("Redirecting to login.")) {
-                window.location.href = "http://localhost:8080/auth/google";
+                window.location.href = "https://backend.buffbrowser.com:8080/auth/google";
             } else {
                 alert(error.message);
             }
@@ -94,7 +94,7 @@ const Profile = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetchWithTokenRefresh("http://localhost:8080/user/getuser", {
+                const response = await fetchWithTokenRefresh("https://backend.buffbrowser.com:8080/user/getuser", {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                 });
@@ -111,7 +111,7 @@ const Profile = () => {
                 console.error("Error fetching user data: ", error);
 
                 if (error.message.includes("Redirecting to login.")) {
-                    window.location.href = "http://localhost:8080/auth/google"; 
+                    window.location.href = "https://backend.buffbrowser.com:8080/auth/google"; 
                 }
             }
         }
@@ -135,7 +135,7 @@ const Profile = () => {
 
     const handleRemoveItem = async (itemId) => {
         try {
-            const response = await fetchWithTokenRefresh("http://localhost:8080/user/removeitemfromwatchlist", {
+            const response = await fetchWithTokenRefresh("https://backend.buffbrowser.com:8080/user/removeitemfromwatchlist", {
                 method: "POST",
                 body: JSON.stringify({
                     objectId: itemId,

@@ -150,7 +150,7 @@ function Nav({ activeWeapons, setActiveWeapons, activeStickers, setActiveSticker
     }
 
     const navigateToHome = () => {
-        window.location.href = 'http://localhost:3000/';
+        window.location.href = 'https://www.buffbrowser.com';
     };
 
     const handleHamburger = (e) => {

@@ -19,7 +19,7 @@ const fetchWithTokenRefresh = async (url, options = {}) => {
 }
 
 async function refreshAccessToken() {
-    return await fetch("http://localhost:8080/auth/refresh", {
+    return await fetch("https://backend.buffbrowser.com:8080/auth/refresh", {
         method: "POST",
         credentials: "include",
     });

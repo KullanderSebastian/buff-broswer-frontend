@@ -1,5 +1,5 @@
 export const fetchSkins = async ({ currentPage, stickers, activeWeapons, wear }) => {
-    const url = `http://localhost:8080/skin/getskins?page=${currentPage}&limit=20`;
+    const url = `https://backend.buffbrowser.com:8080/skin/getskins?page=${currentPage}&limit=20`;
 
     const searchParameters = [];
 

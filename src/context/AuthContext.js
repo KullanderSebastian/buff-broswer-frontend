@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const response = await fetch("http://localhost:8080/auth/status", {
+                const response = await fetch("https://backend.buffbrowser.com:8080/auth/status", {
                     credentials: "include",
                 });
 

@@ -110,7 +110,7 @@ const SkinWatchlistForm = ({ onAddToWatchlistState, onCloseModal }) => {
 
         const itemName = isStattrak ? `StatTrak™ ${weaponType} | ${skinName}` : `${weaponType} | ${skinName}`;
 
-        const response = await fetchWithTokenRefresh("http://localhost:8080/user/additemtowatchlist", {
+        const response = await fetchWithTokenRefresh("https://backend.buffbrowser.com:8080/user/additemtowatchlist", {
             method: "POST",
             body: JSON.stringify({
                 itemName: itemName,

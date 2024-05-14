@@ -9,7 +9,7 @@ const Logout = () => {
         e.preventDefault();
         
         try {
-            const response = await fetch("http://localhost:8080/logout", {
+            const response = await fetch("https://backend.buffbrowser.com:8080/logout", {
                 method: "GET",
                 credentials: "include",
             });
