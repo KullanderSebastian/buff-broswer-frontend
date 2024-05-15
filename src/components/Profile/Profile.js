@@ -34,7 +34,7 @@ const Profile = () => {
             await phoneSchema.validate({ phone });
             setError("");
 
-            const response = await fetchWithTokenRefresh("https://backend.buffbrowser.com:8080/user/updatephone", {
+            const response = await fetchWithTokenRefresh("https://backend.buffbrowser.com/user/updatephone", {
                 method: "POST",
                 body: JSON.stringify({
                     phone: phone
@@ -60,7 +60,7 @@ const Profile = () => {
         event.preventDefault();
 
         try {
-            const response = await fetchWithTokenRefresh("https://backend.buffbrowser.com:8080/user/updatenotificationpreference", {
+            const response = await fetchWithTokenRefresh("https://backend.buffbrowser.com/user/updatenotificationpreference", {
                 method: "POST",
                 body: JSON.stringify({
                     notificationPreference: notificationPreference
@@ -74,13 +74,12 @@ const Profile = () => {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
     
-            const data = await response.json();
             alert("Notification preference changed.")
         } catch (error) {
             console.error(error);
 
             if (error.message.includes("Redirecting to login.")) {
-                window.location.href = "https://backend.buffbrowser.com:8080/auth/google";
+                window.location.href = "https://backend.buffbrowser.com/auth/google";
             } else {
                 alert(error.message);
             }
@@ -94,7 +93,7 @@ const Profile = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetchWithTokenRefresh("https://backend.buffbrowser.com:8080/user/getuser", {
+                const response = await fetchWithTokenRefresh("https://backend.buffbrowser.com/user/getuser", {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                 });
@@ -111,7 +110,7 @@ const Profile = () => {
                 console.error("Error fetching user data: ", error);
 
                 if (error.message.includes("Redirecting to login.")) {
-                    window.location.href = "https://backend.buffbrowser.com:8080/auth/google"; 
+                    window.location.href = "https://backend.buffbrowser.com/auth/google"; 
                 }
             }
         }
@@ -135,7 +134,7 @@ const Profile = () => {
 
     const handleRemoveItem = async (itemId) => {
         try {
-            const response = await fetchWithTokenRefresh("https://backend.buffbrowser.com:8080/user/removeitemfromwatchlist", {
+            const response = await fetchWithTokenRefresh("https://backend.buffbrowser.com/user/removeitemfromwatchlist", {
                 method: "POST",
                 body: JSON.stringify({
                     objectId: itemId,
@@ -235,9 +234,9 @@ const Profile = () => {
                     <button className="btn" onClick={handleModal}>Add item</button>
 
 
-                    <div id="addItemModal" class="modal" style={modalIsOpen ? { display: "block" } : { display: "none" }}>
-                        <div class="modalContent">
-                            <span onClick={handleModal} class="close">&times;</span>
+                    <div id="addItemModal" className="modal" style={modalIsOpen ? { display: "block" } : { display: "none" }}>
+                        <div className="modalContent">
+                            <span onClick={handleModal} className="close">&times;</span>
                             <SkinWatchlistForm onAddToWatchlistState={addToWatchlistState} onCloseModal={handleModal}/>
                         </div>
                     </div>

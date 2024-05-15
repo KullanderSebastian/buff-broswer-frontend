@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import Nav from "./components/Nav/Nav";
 import SkinsList from "./components/SkinList/SkinsList";

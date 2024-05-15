@@ -1,3 +1,5 @@
+import React from "react";
+import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Skin from "../Skin/Skin.js";
 import stickers from "../../stickerUrls.json";
@@ -30,5 +32,11 @@ const SkinsList = ({ skins, fetchMoreData, hasMore }) => (
         {hasMore ? "" : <p style={{ textAlign: "center" }}>You have seen it all!</p>}
     </div>
 );
+
+SkinsList.propTypes = {
+    skins: PropTypes.array.isRequired,
+    fetchMoreData: PropTypes.func.isRequired,
+    hasMore: PropTypes.bool.isRequired,
+};
 
 export default SkinsList

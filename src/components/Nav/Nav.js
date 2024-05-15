@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import PropTypes from "prop-types";
 import buffBrowserIcon from "../../img/Browser.png";
 import { useAuth } from "../../context/AuthContext";
 import { useOutsideAlerter } from "../../hooks/useOutsideAlerter";
@@ -222,5 +223,14 @@ function Nav({ activeWeapons, setActiveWeapons, activeStickers, setActiveSticker
         </div>   
     );
   }
+
+  Nav.propTypes = {
+    activeWeapons: PropTypes.array.isRequired,
+    setActiveWeapons: PropTypes.func.isRequired,
+    activeStickers: PropTypes.object.isRequired,
+    setActiveStickers: PropTypes.func.isRequired,
+    wear: PropTypes.array.isRequired,
+    handleWear: PropTypes.func.isRequired
+  };
   
   export default Nav;

@@ -1,3 +1,5 @@
+import React from "react";
+import PropTypes from "prop-types";
 import Login from "../Login/Login";
 import "./HamburgerMenu.scss";
 
@@ -39,5 +41,17 @@ const HamburgerMenu = ({navigateToHome, buffBrowserIcon, open, handleHamburger, 
             </div>
     );
 }
+
+HamburgerMenu.propTypes = {
+    navigateToHome: PropTypes.func.isRequired,
+    buffBrowserIcon: PropTypes.string.isRequired,
+    open: PropTypes.bool.isRequired,
+    handleHamburger: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
+    inputValue: PropTypes.string.isRequired,
+    handleInputChange: PropTypes.func.isRequired,
+    inputRef: PropTypes.object.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
+};
 
 export default HamburgerMenu;

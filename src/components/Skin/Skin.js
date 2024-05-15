@@ -1,6 +1,7 @@
+import React from "react";
+import PropTypes from "prop-types";
 import Collapsible from 'react-collapsible';
 import { HiOutlineCurrencyYen } from "react-icons/hi2";
-import { IoMdArrowDropdown } from "react-icons/io";
 import "./Skin.scss";
 
 function Skin(props) {
@@ -51,5 +52,16 @@ function Skin(props) {
         </div>
     );
 }
+
+Skin.propTypes = {
+    skinName: PropTypes.string.isRequired,
+    skinImg: PropTypes.string.isRequired,
+    stickerImg: PropTypes.string.isRequired,
+    listingPrice: PropTypes.number.isRequired,
+    percentagePrice: PropTypes.number.isRequired,
+    marketPrice: PropTypes.number.isRequired,
+    marketSp: PropTypes.number.isRequired,
+    listingSp: PropTypes.number.isRequired,
+};
 
 export default Skin;

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { fetchSkins } from "../api/skinService";
 
 export const useSkinsData = (activeWeapons, activeStickers, wear) => {

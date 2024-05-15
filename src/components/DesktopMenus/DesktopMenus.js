@@ -1,3 +1,5 @@
+import React from "react";
+import PropTypes from "prop-types";
 import { IoMdArrowDropdown } from "react-icons/io";
 import "./DesktopMenus.scss";
 
@@ -16,7 +18,7 @@ const DesktopMenus = ({weapons, activeWeapons, handleWeaponChoice, renderWears, 
 
             <div className="wears">
             {renderWears.map((renderWear) => {
-                return <p className={wear.includes(renderWear) ? "wearActive" : ""} onClick={handleWear}>{renderWear}</p>
+                return <p key={renderWear} className={wear.includes(renderWear) ? "wearActive" : ""} onClick={handleWear}>{renderWear}</p>
             })}
             </div>
             
@@ -46,5 +48,19 @@ const DesktopMenus = ({weapons, activeWeapons, handleWeaponChoice, renderWears, 
         </div>
     );
 }
+
+DesktopMenus.propTypes = {
+    weapons: PropTypes.array.isRequired,
+    activeWeapons: PropTypes.array.isRequired,
+    handleWeaponChoice: PropTypes.func.isRequired,
+    renderWears: PropTypes.array.isRequired,
+    wear: PropTypes.array.isRequired,
+    handleWear: PropTypes.func.isRequired,
+    stickerData: PropTypes.object.isRequired,
+    handleClearStickers: PropTypes.func.isRequired,
+    handleStickerType: PropTypes.func.isRequired,
+    activeStickers: PropTypes.object.isRequired,
+    handleStickerChoice: PropTypes.func.isRequired,
+};
 
 export default DesktopMenus;

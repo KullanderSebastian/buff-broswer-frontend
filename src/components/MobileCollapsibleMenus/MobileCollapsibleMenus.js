@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import CustomCollapsible from "../CustomCollapsible/CustomCollapsible";
 import "./MobileCollapsibleMenus.scss";
 
@@ -29,7 +30,7 @@ const DropdownMenu = ({
 
     const wearContent = (
         wears.map((renderWear) => {
-            return <p className={wear.includes(renderWear) ? "wearActiveMobile" : ""} onClick={handleWear}>{renderWear}</p>
+            return <p key={renderWear} className={wear.includes(renderWear) ? "wearActiveMobile" : ""} onClick={handleWear}>{renderWear}</p>
         })
     );
 
@@ -46,7 +47,7 @@ const DropdownMenu = ({
             <CustomCollapsible triggerName="Wear" content={wearContent} wears={wears}/>
             {Object.keys(stickerRenderOptions).map((key) => {
                 return (
-                    <CustomCollapsible triggerName={key} content={
+                    <CustomCollapsible triggerName={key} key={key} content={
                         <div className="mobileMenuGrid">
                         <ul data-tournament={key}>
                             <li onClick={handleClearStickers}>Clear stickers</li>
@@ -71,6 +72,20 @@ const DropdownMenu = ({
             })}
         </div>
     );
+};
+
+DropdownMenu.propTypes = {
+    weapons: PropTypes.array.isRequired,
+    activeWeapons: PropTypes.array.isRequired,
+    handleWeaponChoice: PropTypes.func.isRequired,
+    wears: PropTypes.array.isRequired,
+    wear: PropTypes.array.isRequired,
+    handleWear: PropTypes.func.isRequired,
+    activeStickers: PropTypes.object.isRequired,
+    handleStickerChoice: PropTypes.func.isRequired,
+    handleClearStickers: PropTypes.func.isRequired,
+    stickerData: PropTypes.object.isRequired,
+    handleStickerType: PropTypes.func.isRequired
 };
 
 export default DropdownMenu;

@@ -1,3 +1,5 @@
+import React from "react";
+import PropTypes from "prop-types";
 import Login from "../Login/Login";
 import "./Navbar.scss";
 
@@ -16,7 +18,7 @@ const Navbar = ({navigateToHome, buffBrowserIcon, onSubmit, inputValue, handleIn
                                 placeholder="Fire Serpent"
                                 ref={inputRef}
                             />
-                            <label for="search" className="searchLabel">Search For Skins</label>
+                            <label htmlFor="search" className="searchLabel">Search For Skins</label>
 
                             <div className="dropdown" ref={wrapperRef}>
                                 {isOpen && (
@@ -42,5 +44,19 @@ const Navbar = ({navigateToHome, buffBrowserIcon, onSubmit, inputValue, handleIn
                 </div>
     );
 }
+
+Navbar.propTypes = {
+    navigateToHome: PropTypes.func.isRequired,
+    buffBrowserIcon: PropTypes.string.isRequired,
+    onSubmit: PropTypes.func.isRequired,
+    inputValue: PropTypes.string.isRequired,
+    handleInputChange: PropTypes.func.isRequired,
+    inputRef: PropTypes.object.isRequired,
+    wrapperRef: PropTypes.object.isRequired,
+    isOpen: PropTypes.bool.isRequired,
+    filteredData: PropTypes.array.isRequired,
+    handleItemSelection: PropTypes.func.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired
+};
 
 export default Navbar;

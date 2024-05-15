@@ -3,8 +3,7 @@ import Collapsible from 'react-collapsible';
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io';
 import PropTypes from "prop-types";
 
-const DropdownMenu = ({triggerName, content, weapons, wears}) => {
-
+const DropdownMenu = ({triggerName, content, weapons}) => {
     const createTrigger = (name) => (
         <div>
             {name} <IoMdArrowDropdown className="arrow" />

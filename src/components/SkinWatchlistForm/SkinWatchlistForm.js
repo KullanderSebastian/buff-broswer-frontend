@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import fetchWithTokenRefresh from "../../utils/fetchWithTokenRefresh";
 import "./SkinWatchlistForm.scss";
 import { skinItems } from "../../data/skinItems.js";
@@ -110,7 +111,7 @@ const SkinWatchlistForm = ({ onAddToWatchlistState, onCloseModal }) => {
 
         const itemName = isStattrak ? `StatTrak™ ${weaponType} | ${skinName}` : `${weaponType} | ${skinName}`;
 
-        const response = await fetchWithTokenRefresh("https://backend.buffbrowser.com:8080/user/additemtowatchlist", {
+        const response = await fetchWithTokenRefresh("https://backend.buffbrowser.com/user/additemtowatchlist", {
             method: "POST",
             body: JSON.stringify({
                 itemName: itemName,
@@ -243,6 +244,11 @@ const SkinWatchlistForm = ({ onAddToWatchlistState, onCloseModal }) => {
             </form>
         </div>
     );
+};
+
+SkinWatchlistForm.propTypes = {
+    onAddToWatchlistState: PropTypes.func.isRequired,
+    onCloseModal: PropTypes.func.isRequired,
 };
 
 export default SkinWatchlistForm;
