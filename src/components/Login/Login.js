@@ -3,7 +3,7 @@ import "./Login.scss";
 
 const Login = () => {
     const handleLogin = (e) => {
-        window.location.href = "https://backend.buffbrowser.com:8080/auth/google";
+        window.location.href = "https://backend.buffbrowser.com:/auth/google";
     };
 
     return (
